@@ -1,34 +1,65 @@
 <!doctype html>
-<html lang="en" ng-app="LunchCheck">
-  <head>
-    <title>Lunch Checker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="angular.min.js"></script>
-    <script type="text/javascript" src='app.js'></script>
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <style>
-      .message { font-size: 1.3em; font-weight: bold; }
-    </style>
-  </head>
-<body>
-   <div class="container" ng-controller="LunchCheckController">
-     <h1>Lunch Checker</h1>
+<html lang="en">
 
-         <div class="form-group">
-             <input id="lunch-menu" type="text"
-             placeholder="list comma separated dishes you usually have for lunch"
-             class="form-control" ng-model="list" ng-style="boxStyle">
-             <span>Note:more or only comma will ask you to enter data instead of displaying "Too Much!"</span>
-         </div>
-         <div ng-style ="fontStyle">
-           {{msg}}
-         </div>
-         <div class="form-group">
-             <button class="btn btn-default" ng-click="checkItems()">Check If Too Much</button>
-         </div>
-         <div class="form-group message">
-           <!-- Your message can go here. -->
-         </div>
-   </div>
+<head>
+  <title>Shopping List Check Off</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/bootstrap.min.css">
+  <style>
+    .emptyMessage {
+      font-weight: bold;
+      color: red;
+      font-size: 1.2em;
+    }
+    li {
+      margin-bottom: 7px;
+      font-size: 1.2em;
+    }
+    li>button {
+      margin-left: 6px;
+    }
+    button>span {
+      color: green;
+    }
+  </style>
+</head>
+<script src="angular.min.js"></script>
+<script src="app.js"></script>
+
+<body ng-app="ShoppingListCheckOff">
+  <div class="container">
+    <h1>Shopping List Check Off</h1>
+
+    <div class="row">
+
+      <!-- To Buy List -->
+      <div class="col-md-6" ng-controller='ToBuyController as ToBuyList'>
+        <h2>To Buy:</h2>
+        <ul>
+          <li ng-repeat="item1 in ToBuyList.items">
+            Buy {{ item1.quantity }} {{ item1.name }}
+            <button class="btn btn-default" ng-click="ToBuyList.MoveItem($index);">
+              <span class="glyphicon glyphicon-ok"></span>
+              Bought
+            </button>
+          </li>
+        </ul>
+        <div ng-if="!ToBuyList.items[0]" class="emptyMessage">Everything is bought!</div>
+      </div>
+
+      <!-- Already Bought List -->
+      <div class="col-md-6" ng-controller='AlreadyBoughtController as BoughtList'>
+        <h2>Already Bought:</h2>
+        <ul>
+          <li ng-repeat="item2 in BoughtList.items">
+            Bought {{ item2.quantity }} {{ item2.name }}
+          </li>
+        </ul>
+        <div ng-if="!BoughtList.items[0]" class="emptyMessage">Nothing bought yet.</div>
+      </div>
+    </div>
+  </div>
+
 </body>
+
 </html>
