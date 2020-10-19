@@ -54,7 +54,7 @@
         quantity: "10"
       }
     ];
-
+//Items in cart
     var ItemsBought = [];
 
     service.MoveItem = function(itemIdex) {
